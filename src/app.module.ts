@@ -6,12 +6,19 @@ import { NodesModule } from './nodes/nodes.module';
 import { CanvasesModule } from './canvases/canvases.module';
 import { EventsModule } from './events/events.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot("mongodb://localhost/nest"), 
     EventEmitterModule.forRoot(),
-    NodesModule, CanvasesModule, EventsModule],
+    NodesModule, 
+    CanvasesModule, 
+    EventsModule, 
+    UserModule, 
+    AuthModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
