@@ -32,10 +32,12 @@ export class EventsGateway {
     @ConnectedSocket() client: Socket
   ) {
     let canvas: CanvasDocument = await this.canvasesService.findOne(data.canvasId);
+
     if (canvas != null) {
       client.join(canvas.id);
       let nodes: unknown[] = await this.nodeService.findByCanvasId(canvas.id);
-      this.eventsService.deploy(client, canvas, nodes as NodeKindDocument[]);
+      this.eventsService.deploy(client, nodes as NodeKindDocument[]);
     }
+
   }
 }
