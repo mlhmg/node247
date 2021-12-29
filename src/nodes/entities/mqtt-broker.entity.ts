@@ -7,7 +7,7 @@ export type MQTTBrokerDocument = MQTTBroker & Document
 @Schema()
 export class MQTTBroker {
   @Prop()
-  name: string;
+  title: string;
 
   @Prop()
   server: string;
@@ -32,6 +32,6 @@ export class MQTTBroker {
 
 export const MQTTBrokerSchema = SchemaFactory.createForClass(MQTTBroker);
 
-MQTTBrokerSchema.methods.run = function (socket: Socket, data) {
+MQTTBrokerSchema.methods.run = function (client: Socket, data) {
   return data
 }

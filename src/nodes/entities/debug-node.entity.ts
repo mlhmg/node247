@@ -17,7 +17,7 @@ export class DebugNode {
 
 export const DebugNodeSchema = SchemaFactory.createForClass(DebugNode)
 
-DebugNodeSchema.methods.run = function (socket: Socket, data) {
-  socket.emit(data)
+DebugNodeSchema.methods.run = function (client: Socket, data) {
+  client.emit(data)
   return data
 }

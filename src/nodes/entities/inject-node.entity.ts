@@ -8,16 +8,16 @@ export type InjectNodeDocument = InjectNode & Document
 export class InjectNode {
   @Prop()
   data: string;
-  
+
   @Prop()
   repeat: number;
-  
+
   run: Function;
 }
 
 export const InjectNodeSchema = SchemaFactory.createForClass(InjectNode);
 
-InjectNodeSchema.methods.run = function (socket: Socket, data) {
+InjectNodeSchema.methods.run = function (client: Socket, data) {
   data = this.get('data')
   return data
 }

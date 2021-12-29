@@ -19,7 +19,7 @@ export class Node {
   canvas: Canvas;
 
   @Prop()
-  name: string;
+  title: string;
 
   @Prop()
   isEnable: boolean;
@@ -30,7 +30,7 @@ export class Node {
     enum: [DebugNode.name, InjectNode.name, FunctionNode.name, WebsocketNode.name, MQTTNode.name]
   })
   kind: string;
-  
+
   @Prop([Number])
   connectionsOut: number[];
 
