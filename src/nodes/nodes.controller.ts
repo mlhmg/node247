@@ -5,7 +5,7 @@ import { BulkUpdateNodeDto, UpdateNodeDto } from './dto/update-node.dto';
 
 @Controller('nodes')
 export class NodesController {
-  constructor(private readonly nodesService: NodesService) {}
+  constructor(private readonly nodesService: NodesService) { }
 
   @Post()
   create(@Body() bulkCreateNodeDto: BulkCreateNodeDto) {
@@ -29,6 +29,6 @@ export class NodesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.nodesService.remove(+id);
+    return this.nodesService.remove(id);
   }
 }

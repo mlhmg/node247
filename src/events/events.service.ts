@@ -36,7 +36,7 @@ export function filterNodes(incomingNodeId: number, nodes: NodeKindDocument[]) {
 export class EventsService {
   constructor(private eventEmitter: EventEmitter2) {}
 
-  deploy(client: Socket, canvas: CanvasDocument, nodes: NodeKindDocument[]): void {
+  deploy(client: Socket, nodes: NodeKindDocument[]): void {
     let [filteredNodes, remainingNodes] = filterNodes(-1, nodes);
 
     let payload = new NodeExecuteDto();
@@ -45,8 +45,5 @@ export class EventsService {
     payload.remainingNodes = remainingNodes;
 
     this.eventEmitter.emit("node.execute", payload, client, this.eventEmitter);
-    // Steps:
-    // 1. Filter array to retrieve items that doesnt has input nodes
-    // 2. Loop the filtered array to execute command in that node then loop  
   }
 }

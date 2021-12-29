@@ -17,7 +17,7 @@ export class FunctionNode {
 
 export const FunctionNodeSchema = SchemaFactory.createForClass(FunctionNode);
 
-FunctionNodeSchema.methods.run = function (socket: Socket, data) {
+FunctionNodeSchema.methods.run = function (client: Socket, data) {
   let result: any = eval(this.get('code'));
   return result
 }

@@ -20,6 +20,6 @@ export class WebsocketNode {
 
 export const WebsocketNodeSchema = SchemaFactory.createForClass(WebsocketNode);
 
-WebsocketNodeSchema.methods.run = function (socket: Socket, data) {
+WebsocketNodeSchema.methods.run = function (client: Socket, data) {
   return data
 }

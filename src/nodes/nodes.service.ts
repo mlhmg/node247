@@ -25,9 +25,10 @@ export class NodesService {
     private mqttNodeModel: Model<MQTTNodeDocument>,
     @InjectModel(WebsocketNode.name)
     private websocketNodeModel: Model<WebsocketNodeDocument>,
-  ) {}
+  ) { }
 
   create(bulkCreateNodeDto: BulkCreateNodeDto) {
+    this.removeByCanvasId(bulkCreateNodeDto.canvas);
     for (let newNodeDto of bulkCreateNodeDto.nodes) {
       let createdNode = null;
       if (newNodeDto.kind === DebugNode.name) {
@@ -59,12 +60,12 @@ export class NodesService {
   }
 
   async findOne(id: string) {
-    let node = await this.nodeModel.findOne({_id: id});
+    let node = await this.nodeModel.findOne({ _id: id });
     return node;
   }
 
   findByCanvasId(canvasId: string) {
-    let node = this.nodeModel.find({canvasId: canvasId});
+    let node = this.nodeModel.find({ canvasId: canvasId });
     return node;
   }
 
@@ -73,26 +74,31 @@ export class NodesService {
       let updatedNode = null;
 
       if (updateNodeDto.kind === DebugNode.name) {
-        updatedNode = this.debugNodeModel.updateOne({_id: updateNodeDto._id}, updateNodeDto);
+        updatedNode = this.debugNodeModel.updateOne({ _id: updateNodeDto._id }, updateNodeDto);
       }
       if (updateNodeDto.kind === FunctionNode.name) {
-        updatedNode = this.functionNodeModel.updateOne({_id: updateNodeDto._id}, updateNodeDto);
+        updatedNode = this.functionNodeModel.updateOne({ _id: updateNodeDto._id }, updateNodeDto);
       }
       if (updateNodeDto.kind === InjectNode.name) {
-        updatedNode = this.injectNodeModel.updateOne({_id: updateNodeDto._id}, updateNodeDto);
+        updatedNode = this.injectNodeModel.updateOne({ _id: updateNodeDto._id }, updateNodeDto);
       }
       if (updateNodeDto.kind === MQTTNode.name) {
-        updatedNode = this.mqttNodeModel.updateOne({_id: updateNodeDto._id}, updateNodeDto);
+        updatedNode = this.mqttNodeModel.updateOne({ _id: updateNodeDto._id }, updateNodeDto);
       }
       if (updateNodeDto.kind === WebsocketNode.name) {
-        updatedNode = this.websocketNodeModel.updateOne({_id: updateNodeDto._id}, updateNodeDto);
+        updatedNode = this.websocketNodeModel.updateOne({ _id: updateNodeDto._id }, updateNodeDto);
       }
 
     }
     return `This action updates some nodes`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} node`;
+  }
+
+  async removeByCanvasId(canvasId: string) {
+    let result = await this.nodeModel.deleteMany({ canvasId: canvasId });
+    return result
   }
 }

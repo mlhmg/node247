@@ -1,15 +1,15 @@
 import { OmitType } from "@nestjs/mapped-types";
 import { Type } from "class-transformer";
-import { 
-  IsBoolean, 
-  IsHexadecimal, 
-  IsIn, 
-  IsJSON, 
-  IsNumber, 
-  IsOptional, 
-  IsPositive, 
-  IsString, 
-  ValidateNested 
+import {
+  IsBoolean,
+  IsHexadecimal,
+  IsIn,
+  IsJSON,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  ValidateNested
 } from "class-validator";
 import { DebugNode } from "../entities/debug-node.entity";
 import { FunctionNode } from "../entities/function-node.entity";
@@ -28,16 +28,16 @@ export class NodeDto {
   canvas: string;
 
   @IsString()
-  name: string;
+  title: string;
 
   @IsBoolean()
   isEnable: boolean;
 
   @IsIn([
-    DebugNode.name, 
-    FunctionNode.name, 
-    InjectNode.name, 
-    MQTTNode.name, 
+    DebugNode.name,
+    FunctionNode.name,
+    InjectNode.name,
+    MQTTNode.name,
     WebsocketNode.name
   ])
   kind: string;
@@ -132,13 +132,21 @@ export class WebsocketNodeDto extends NodeDto {
   @IsString()
   listener: string;
 
+  @IsString()
+  client: string;
+
   @IsPositive({
     each: true
   })
   connectionsOut: number[];
+
+  @IsPositive({
+    each: true
+  })
+  connectionsIn: number[];
 }
 
-export class CreateNodeDto {}
+export class CreateNodeDto { }
 
 class CreateDebugNodeDto extends OmitType(DebugNodeDto, ['_id'] as const) {
 
@@ -165,7 +173,7 @@ export class BulkCreateNodeDto {
   @Type(() => NodeDto, {
     keepDiscriminatorProperty: true,
     discriminator: {
-      property: 'type',
+      property: 'kind',
       subTypes: [
         { value: CreateDebugNodeDto, name: DebugNode.name },
         { value: CreateFunctionNodeDto, name: FunctionNode.name },
@@ -176,5 +184,7 @@ export class BulkCreateNodeDto {
     }
   })
   nodes: NodeDto[];
-}
 
+  @IsHexadecimal()
+  canvas: string;
+}

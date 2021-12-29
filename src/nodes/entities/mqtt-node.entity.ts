@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document , Schema as mongooseSchema} from 'mongoose';
+import { Document, Schema as mongooseSchema } from 'mongoose';
 import { Socket } from 'socket.io';
 import { MQTTBroker } from './mqtt-broker.entity';
 
@@ -16,7 +16,7 @@ export class MQTTNode {
   @Prop()
   outputType: string;
 
-  @Prop({ type: mongooseSchema.Types.ObjectId, ref: 'MQTTBroker'})
+  @Prop({ type: mongooseSchema.Types.ObjectId, ref: 'MQTTBroker' })
   broker: MQTTBroker;
 
   run: Function
@@ -24,7 +24,7 @@ export class MQTTNode {
 
 export const MQTTNodeSchema = SchemaFactory.createForClass(MQTTNode);
 
-MQTTNodeSchema.methods.run = function (socket: Socket, data) {
+MQTTNodeSchema.methods.run = function (client: Socket, data) {
   data = this.get('data')
   return data
 }
